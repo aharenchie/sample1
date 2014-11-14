@@ -17,14 +17,25 @@ public class Test {
                 new BufferedImage((int)w, (int)h, BufferedImage.TYPE_INT_RGB);
         
         for(double  y=0;y<h;y++){
-            for(double  x=1;x<=w;x++){
+            for(double  x=0;x<w;x++){
             	double  a = x/w;
             	System.out.print(a);
-                int c1 = read1.getRGB((int)x-1, (int)y);
-                int c2 = read2.getRGB((int)x-1, (int)y);
-                double  new_c = a*c2+(1-a)*c1;
+                int c1 = read1.getRGB((int)x, (int)y);
+                int c2 = read2.getRGB((int)x, (int)y);
                 
-                write.setRGB((int)x-1,(int)y,(int)new_c);
+                int rate = 5;
+                int pixel= 0XFF000000;
+                int wk1= ((c1 & 0xFF0000)*rate)/5;      // 16～23= 赤色
+                int wk2= ((c2 & 0xFF0000)*(4-rate))/5;
+                pixel |= (wk1+wk2) & 0xFF0000;
+                wk1= ((c1 & 0xFF00)*rate)/5;        // 8～15= 緑色
+                wk2= ((c2 & 0xFF00)*(4-rate))/5;
+                pixel |= (wk1+wk2) & 0xFF00;
+                wk1= ((c1 & 0x00FF)*rate)/5;        // 0～7= 青色
+                wk2= ((c2 & 0x00FF)*(4-rate))/5;
+                pixel |= (wk1+wk2) & 0x00FF; //double  new_c = a*c2+(1-a)*c1;
+                
+                write.setRGB((int)x,(int)y,(int)pixel);
                 
             }
         }
