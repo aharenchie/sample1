@@ -7,22 +7,24 @@ import java.io.*;
 import javax.imageio.ImageIO;
 public class Test {
     public static void main(String[] args) throws IOException {
-        File f1 = new File("./pic/test1.jpg");
-        File f2 = new File("./pic/test2.jpg");
+        File f1 = new File("./pic/blue.jpg");
+        File f2 = new File("./pic/red.jpg");
         BufferedImage read1=ImageIO.read(f1);
         BufferedImage read2=ImageIO.read(f2);       
         
-        int w = read1.getWidth(),h=read1.getHeight();
+        double  w = read1.getWidth(),h=read1.getHeight();
         BufferedImage write =
-                new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+                new BufferedImage((int)w, (int)h, BufferedImage.TYPE_INT_RGB);
         
-        for(int y=0;y<h;y++){
-            for(int x=0;x<w;x++){
-                int c1 = read1.getRGB(x, y);
-                int c2 = read2.getRGB(x, y);
-                int new_c = (c1+c2)/2;
+        for(double  y=0;y<h;y++){
+            for(double  x=1;x<=w;x++){
+            	double  a = x/w;
+            	System.out.print(a);
+                int c1 = read1.getRGB((int)x-1, (int)y);
+                int c2 = read2.getRGB((int)x-1, (int)y);
+                double  new_c = a*c2+(1-a)*c1;
                 
-                write.setRGB(x,y,new_c);
+                write.setRGB((int)x-1,(int)y,(int)new_c);
                 
             }
         }
