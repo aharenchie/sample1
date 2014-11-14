@@ -18,10 +18,13 @@ public class Test {
         
         int count = 1;
         int alpha = 0;
+        int max = w-1;
         
         for(int y=0;y<h;y++){
             for(int x=0;x<w;x++){
             	
+            	alpha = x;
+         /*   	
             	if(x < w/4)
             		alpha = 0;
             	
@@ -33,6 +36,7 @@ public class Test {
             	
             	if(x >= (w/4)*3)
             		alpha = 3;
+            		*/
             	
             	//System.out.print(alpha);
                 int c1 = read1.getRGB(x, y);
@@ -47,10 +51,10 @@ public class Test {
                 int g2 = ImageUtility.g(c2);
                 int b2 = ImageUtility.b(c2);
                 
-                int a = (alpha*a1 + (3-alpha)*a2)/3;
-                int r = (alpha*r1 + (3-alpha)*r2)/3;
-                int g = (alpha*g1 + (3-alpha)*g2)/3;
-                int b = (alpha*b1 + (3-alpha)*b2)/3;
+                int a = (alpha*a1 + (max-alpha)*a2)/max;
+                int r = (alpha*r1 + (max-alpha)*r2)/max;
+                int g = (alpha*g1 + (max-alpha)*g2)/max;
+                int b = (alpha*b1 + (max-alpha)*b2)/max;
                 
                 int new_c = ImageUtility.argb(a, r, g, b);
                 
